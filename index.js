@@ -24,7 +24,6 @@ class Input {
     }
 
     if (empty) {
-      // console.log(delay, this.timestamp, '<--', microtime())
       this.pacer._restart()
     }
   }
@@ -73,7 +72,7 @@ module.exports = class DelayPacer {
       const expiry = inp.nextExpiry()
 
       if (expiry > -1 && expiry <= now) {
-        this.oninput(inp, inp.shift().message, expiry)
+        this.oninput(inp, inp.shift().message, expiry, now)
       }
     }
   }
