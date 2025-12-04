@@ -4,7 +4,8 @@
   "version": "1.1.0",
   "main": "index.js",
   "scripts": {
-    "test": "lunte"
+    "lint": "prettier --check . && lunte",
+    "format": "prettier --write ."
   },
   "author": "Holepunch Inc",
   "license": "Apache-2.0",
@@ -17,6 +18,8 @@
   },
   "homepage": "https://github.com/holepunchto/delay-pacer",
   "devDependencies": {
-    "lunte": "^1.4.0"
+    "lunte": "^1.4.0",
+    "prettier": "^3.7.4",
+    "prettier-config-holepunch": "^2.0.0"
   }
 }
