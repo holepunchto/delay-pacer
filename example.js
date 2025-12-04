@@ -1,7 +1,7 @@
-const InputPacer = require('./')
+const DelayPacer = require('./')
 
 const e = []
-const pacer = new InputPacer({
+const pacer = new DelayPacer({
   oninput (inp, message) {
     if (message.done) {
       const elapsed = e[e.length - 1] - e[0]
@@ -9,7 +9,7 @@ const pacer = new InputPacer({
       console.log('total error', error, 'microseconds')
     }
 
-    e.push(InputPacer.time())
+    e.push(DelayPacer.time())
   }
 })
 

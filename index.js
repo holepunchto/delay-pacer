@@ -55,7 +55,7 @@ class Input {
   }
 }
 
-module.exports = class InputPacer {
+module.exports = class DelayPacer {
   constructor ({ oninput }) {
     this.inputs = []
     this.clock = 0
