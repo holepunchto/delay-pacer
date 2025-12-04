@@ -1,0 +1,22 @@
+{
+  "name": "delay-pacer",
+  "description": "High precision delay based pacer",
+  "version": "0.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "lunte"
+  },
+  "author": "Holepunch Inc",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/holepunchto/delay-pacer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/holepunchto/delay-pacer/issues"
+  },
+  "homepage": "https://github.com/holepunchto/delay-pacer",
+  "devDependencies": {
+    "lunte": "^1.4.0"
+  }
+}
