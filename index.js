@@ -11,6 +11,10 @@ class Input {
     this.destroyed = false
   }
 
+  get queued () {
+    return this.fifo.length
+  }
+
   queue(delay, message) {
     const empty = this.fifo.isEmpty()
 
