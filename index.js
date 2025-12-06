@@ -1,17 +1,19 @@
 const FIFO = require('fast-fifo')
 
 class Input {
-  constructor(pacer, context) {
+  constructor(pacer, context, oninput, ondestroy) {
     this.pacer = pacer
     this.fifo = new FIFO()
     this.context = context
     this.started = false
     this.timestamp = 0
     this.index = 0
+    this.oninput = oninput
+    this.ondestroy = ondestroy
     this.destroyed = false
   }
 
-  get queued () {
+  get queued() {
     return this.fifo.length
   }
 
@@ -57,11 +59,19 @@ class Input {
       inp.index = this.index
       this.pacer.inputs[inp.index] = inp
     }
+
+    if (this.ondestroy) {
+      while (!this.fifo.isEmpty()) {
+        this.ondestroy(this.fifo.shift())
+      }
+    }
+
+    this.pacer._restart()
   }
 }
 
 module.exports = class DelayPacer {
-  constructor({ oninput }) {
+  constructor({ oninput = null }) {
     this.inputs = []
     this.clock = 0
     this.timeout = null
@@ -78,7 +88,9 @@ module.exports = class DelayPacer {
       const expiry = inp.nextExpiry()
 
       if (expiry > -1 && expiry <= now) {
-        this.oninput(inp, inp.shift().message, expiry, now)
+        const message = inp.shift().message
+        if (inp.oninput) inp.oninput(message, expiry, now)
+        if (this.oninput) this.oninput(inp, message, expiry, now)
       }
     }
   }
@@ -146,8 +158,8 @@ module.exports = class DelayPacer {
     return min
   }
 
-  addInput(context = null) {
-    const inp = new Input(this, context)
+  addInput({ context = null, oninput = null, ondestroy = null } = {}) {
+    const inp = new Input(this, context, oninput, ondestroy)
     this.inputs.push(inp)
     inp.index = this.inputs.length - 1
     return inp
