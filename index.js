@@ -62,7 +62,7 @@ class Input {
 
     if (this.ondestroy) {
       while (!this.fifo.isEmpty()) {
-        this.ondestroy(this.fifo.shift())
+        this.ondestroy(this.fifo.shift().message)
       }
     }
 
