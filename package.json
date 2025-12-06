@@ -1,7 +1,7 @@
 {
   "name": "delay-pacer",
   "description": "High precision delay based pacer",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "index.js",
   "scripts": {
     "lint": "prettier --check . && lunte",
