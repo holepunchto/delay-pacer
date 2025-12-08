@@ -71,10 +71,11 @@ class Input {
 }
 
 module.exports = class DelayPacer {
-  constructor({ oninput = null } = {}) {
+  constructor({ oninput = null, precision = 17 } = {}) {
     this.inputs = []
     this.clock = 0
     this.timeout = null
+    this.precision = precision
     this.oninput = oninput
   }
 
@@ -119,7 +120,7 @@ module.exports = class DelayPacer {
     }
 
     const delta = next - now
-    const ms = delta / 1000 - 17
+    const ms = delta / 1000 - this.precision
 
     if (ms > 0) {
       await new Promise((resolve) => {
