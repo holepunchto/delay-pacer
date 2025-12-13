@@ -24,7 +24,7 @@ class Input {
 
     if (!this.started) {
       this.started = true
-      this.timestamp = microtime() + delay
+      this.timestamp = microtime()
     }
     if (empty) {
       // otherwise it was set below in shift
