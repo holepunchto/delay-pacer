@@ -17,18 +17,13 @@ class Input {
     return this.fifo.length
   }
 
-  queue(delay, message) {
+  queue(offset, message) {
     const empty = this.fifo.isEmpty()
 
-    this.fifo.push({ delay, message })
+    this.fifo.push({ timestamp: microtime() + offset, message })
 
     if (!this.started) {
       this.started = true
-      this.timestamp = microtime()
-    }
-    if (empty) {
-      // otherwise it was set below in shift
-      this.timestamp += delay
     }
 
     if (empty) {
@@ -39,15 +34,12 @@ class Input {
   shift() {
     const next = this.fifo.shift()
     if (!next) return null
-    if (!this.fifo.isEmpty()) {
-      this.timestamp += this.fifo.peek().delay
-    }
     return next
   }
 
   nextExpiry() {
     if (this.fifo.isEmpty()) return -1
-    return this.timestamp
+    return this.fifo.peek().timestamp
   }
 
   destroy() {
@@ -90,7 +82,7 @@ module.exports = class DelayPacer {
 
       if (expiry > -1 && expiry <= now) {
         const message = inp.shift().message
-        if (inp.oninput) inp.oninput(message, expiry, now)
+        if (inp.oninput) inp.oninput(message, expiry, now, next.addedAt, next.empty)
         if (this.oninput) this.oninput(inp, message, expiry, now)
       }
     }
