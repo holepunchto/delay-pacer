@@ -82,7 +82,7 @@ module.exports = class DelayPacer {
 
       if (expiry > -1 && expiry <= now) {
         const message = inp.shift().message
-        if (inp.oninput) inp.oninput(message, expiry, now, next.addedAt, next.empty)
+        if (inp.oninput) inp.oninput(message, expiry, now)
         if (this.oninput) this.oninput(inp, message, expiry, now)
       }
     }
